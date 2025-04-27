@@ -1,0 +1,151 @@
+definitions:
+  models.OrganizationInput:
+    properties:
+      IndividualTaxpayerNumber:
+        type: integer
+      LisenceNumber:
+        type: string
+      address:
+        type: string
+      email:
+        type: string
+      name:
+        type: string
+      password:
+        type: string
+    required:
+    - IndividualTaxpayerNumber
+    - LisenceNumber
+    - address
+    - email
+    - name
+    - password
+    type: object
+  models.UserInput:
+    properties:
+      email:
+        type: string
+      name:
+        type: string
+      password:
+        minLength: 6
+        type: string
+      surname:
+        type: string
+    required:
+    - email
+    - name
+    - password
+    - surname
+    type: object
+  models.Userlogin:
+    properties:
+      email:
+        type: string
+      password:
+        minLength: 6
+        type: string
+    required:
+    - email
+    - password
+    type: object
+info:
+  contact:
+    email: support@swagger.io
+    name: API Support
+    url: http://www.swagger.io/support
+  description: This is a sample server Petstore server.
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+  termsOfService: http://swagger.io/terms/
+  title: Petstore API
+  version: "1.0"
+paths:
+  /login:
+    post:
+      consumes:
+      - application/json
+      description: login to account
+      parameters:
+      - description: User input
+        in: body
+        name: user
+        required: true
+        schema:
+          $ref: '#/definitions/models.Userlogin'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: User created with ID
+          schema:
+            type: string
+        "400":
+          description: Invalid input
+          schema:
+            type: string
+        "500":
+          description: Server error
+          schema:
+            type: string
+      summary: login
+      tags:
+      - auth
+  /registration/organization:
+    post:
+      consumes:
+      - application/json
+      description: Register a new organization
+      parameters:
+      - description: Organization
+        in: body
+        name: user
+        required: true
+        schema:
+          $ref: '#/definitions/models.OrganizationInput'
+      produces:
+      - application/json
+      responses:
+        "400":
+          description: Invalid input
+          schema:
+            type: string
+        "500":
+          description: Server error
+          schema:
+            type: string
+      summary: Create a new organization
+      tags:
+      - organization
+  /registration/user:
+    post:
+      consumes:
+      - application/json
+      description: Register a new user with name, surname, email, and password
+      parameters:
+      - description: User input
+        in: body
+        name: user
+        required: true
+        schema:
+          $ref: '#/definitions/models.UserInput'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: User created with ID
+          schema:
+            type: string
+        "400":
+          description: Invalid input
+          schema:
+            type: string
+        "500":
+          description: Server error
+          schema:
+            type: string
+      summary: Create a new user
+      tags:
+      - users
+swagger: "2.0"
